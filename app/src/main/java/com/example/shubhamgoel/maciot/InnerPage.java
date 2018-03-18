@@ -20,6 +20,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,6 +128,11 @@ public class InnerPage extends AppCompatActivity {
         //emojIcon.addEmojiconEditTextList(emojiconEditText2);
 
 
+
+        // token check
+        MyFirebaseInstanceIdService n = new MyFirebaseInstanceIdService();
+        n.onTokenRefresh();
+
     }
     private Emitter.Listener onStopTyping = new Emitter.Listener() {
 
@@ -156,8 +165,7 @@ public class InnerPage extends AppCompatActivity {
     };
 
 
-    public void SendButton(View v)
-    {
+    public void SendButton(View v) throws MalformedURLException, JSONException {
 
         message = userMessgae.getText().toString();
         heroList.add(new Object(MainActivity.username, message));
@@ -172,5 +180,22 @@ public class InnerPage extends AppCompatActivity {
         String json = gson.toJson(obj);
 
           MainActivity.mSocket.emit("ChatMessage", json);
+        FindToken(message);
+    }
+
+    public void FindToken(String mes) throws MalformedURLException, JSONException {
+
+        // Send
+        if(MyFirebaseInstanceIdService.isToken) {
+            //JSONObject jsonObj = new JSONObject("{\"username\":" + MainActivity.username +",\"Token\":"+MyFirebaseInstanceIdService.token +"}");
+            String token = MyFirebaseInstanceIdService.token;
+            String object = "{\"username\":\""+MainActivity.username+"\",\"token\":\""+token+"\",\"message\":\""+ mes+"\"}";
+            //String object2 = "{\"phonetype\":\"N95\",\"cat\":\"WP\"}";
+
+            JSONObject jsonObj = new JSONObject(object);
+
+            MainActivity.mSocket.emit("RegisterToken", jsonObj);
+        }
+
     }
 }

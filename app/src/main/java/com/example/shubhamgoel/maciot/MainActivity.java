@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -17,9 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
-
-import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
-import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
       //  attemptSend();
         Log.i("myTag", "This is my message");
         setContentView(R.layout.activity_main);
-
-
-
 
         //
     }
